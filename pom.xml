@@ -15,6 +15,8 @@
     <description>AWS Lambda with EventBridge Scheduled Event Sample for Spring Cloud Function</description>
 
     <properties>
+        <java.version>17</java.version>
+
         <aws-lambda-java-core.version>1.2.2</aws-lambda-java-core.version>
         <wrapper.version>1.0.27.RELEASE</wrapper.version>
         <aws-lambda-java-events.version>3.11.1</aws-lambda-java-events.version>
