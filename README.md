@@ -47,3 +47,31 @@ public class LambdaHandler implements Consumer<ScheduledEvent> {
 Monitoring
 
 ![Received Event](./docs/cloudwatch-receivedevent.png)
+
+## Tests
+
+```java
+@SpringBootTest
+class LambdaHandlerTests {
+    @MockBean
+    PetRepository petRepository;
+
+    @Autowired
+    LambdaHandler lambdaHandler;
+
+    @Test
+    void shouldSaveAPetWhenFiring() {
+        var scheduledEvent = new ScheduledEvent();
+
+        scheduledEvent.setTime(DateTime.now());
+        scheduledEvent.setRegion("us-east-1");
+        scheduledEvent.setSource("aws.events");
+
+        Mockito.doNothing().when(petRepository).save(Mockito.any());
+
+        lambdaHandler.accept(scheduledEvent);
+
+        Mockito.verify(petRepository, Mockito.times(1)).save(Mockito.any());
+    }
+}
+```
