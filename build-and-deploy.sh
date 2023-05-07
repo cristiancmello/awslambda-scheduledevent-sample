@@ -82,7 +82,7 @@ aws lambda add-permission \
 
 aws events put-rule \
   --name TriggerEachOneMinuteEventRule \
-  --schedule-expression "rate(1 day)"
+  --schedule-expression "rate(1 minute)"
 
 aws events put-targets \
   --rule TriggerEachOneMinuteEventRule \
