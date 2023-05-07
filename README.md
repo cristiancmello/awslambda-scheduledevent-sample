@@ -19,3 +19,27 @@ mvn -U clean install
 ```sh
 ./build-and-deploy.sh
 ```
+
+## Event Processor
+
+Examples
+
+```java
+@Configuration
+public class FooConfiguration {
+    private static final Logger logger = LoggerFactory.getLogger(Application.class);
+
+    @Bean
+    public Consumer<ScheduledEvent> process() {
+        return value -> {
+            logger.info(value.getRegion());
+            logger.info(value.getSource());
+            logger.info(value.getTime().toString());
+        };
+    }
+}
+```
+
+Monitoring
+
+![Received Event](./docs/cloudwatch-receivedevent.png)
