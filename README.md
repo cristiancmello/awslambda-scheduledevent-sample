@@ -25,17 +25,21 @@ mvn -U clean install
 Examples
 
 ```java
-@Configuration
-public class FooConfiguration {
-    private static final Logger logger = LoggerFactory.getLogger(Application.class);
+@Component
+public class LambdaHandler implements Consumer<ScheduledEvent> {
+    private final PetRepository petRepository;
 
-    @Bean
-    public Consumer<ScheduledEvent> process() {
-        return value -> {
-            logger.info(value.getRegion());
-            logger.info(value.getSource());
-            logger.info(value.getTime().toString());
-        };
+    public LambdaHandler(PetRepository petRepository) {
+        this.petRepository = petRepository;
+    }
+
+    @Override
+    public void accept(ScheduledEvent scheduledEvent) {
+        log.info(scheduledEvent.getRegion());
+        log.info(scheduledEvent.getSource());
+        log.info(scheduledEvent.getTime().toString());
+
+        petRepository.save(Pet.builder().build());
     }
 }
 ```
